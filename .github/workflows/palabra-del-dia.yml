@@ -1,0 +1,37 @@
+name: Palabra del día
+
+on:
+  schedule:
+    - cron: "30 5 * * *"
+    - cron: "30 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: palabra-del-dia
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: node scripts/fetch-word.mjs
+
+      - name: Commit
+        run: |
+          if git diff --quiet data/palabras.json; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/palabras.json
+          git commit -m "Palabra del día $(date -u +%F)"
+          git push
