@@ -6,6 +6,7 @@ const HEADERS = {
     'User-Agent': 'palabra-del-dia/1.0',
     'Accept-Language': 'es-ES,es;q=0.9',
 };
+const RETRY_MS = 60000;
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
 const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', laquo: '«', raquo: '»' };
@@ -18,13 +19,10 @@ function decode(text) {
         .trim();
 }
 
-async function get(url, attempts = 6) {
-    for (let attempt = 1; ; attempt++) {
-        const response = await fetch(url, { headers: HEADERS });
-        if (response.ok) return response.text();
-        if (attempt === attempts) throw new Error(`${url} -> HTTP ${response.status}`);
-        await new Promise((resolve) => setTimeout(resolve, attempt * 5000));
-    }
+async function get(url) {
+    const response = await fetch(url, { headers: HEADERS });
+    if (!response.ok) throw new Error(`${url} -> HTTP ${response.status}`);
+    return response.text();
 }
 
 function parseWordOfTheDay(html) {
@@ -54,17 +52,33 @@ async function fetchDefinition(url) {
     return decode(meta[1]).replace(/^Definición RAE de «[^»]*» según el Diccionario de la lengua española:\s*/, '');
 }
 
-const data = JSON.parse(await readFile(DATA, 'utf8'));
-const entry = parseWordOfTheDay(await get(BASE));
+async function fetchToday(today) {
+    for (let attempt = 1; ; attempt++) {
+        try {
+            const entry = parseWordOfTheDay(await get(BASE));
+            if (entry.fecha === today) {
+                entry.definicion = await fetchDefinition(entry.url);
+                return entry;
+            }
+            console.log(`Intento ${attempt}: la RAE todavía muestra la palabra del ${entry.fecha}`);
+        } catch (error) {
+            console.log(`Intento ${attempt}: ${error.message}`);
+        }
+        await new Promise((resolve) => setTimeout(resolve, RETRY_MS));
+    }
+}
 
-if (data.dias.some((dia) => dia.fecha === entry.fecha)) {
-    console.log(`Ya registrada: ${entry.fecha} ${entry.palabra}`);
+const data = JSON.parse(await readFile(DATA, 'utf8'));
+const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid' }).format(new Date());
+
+if (data.dias.some((dia) => dia.fecha === today)) {
+    console.log(`Ya registrada la palabra del ${today}`);
     process.exit(0);
 }
 
-entry.definicion = await fetchDefinition(entry.url).catch(() => '');
+const entry = await fetchToday(today);
 data.dias.push(entry);
 data.dias.sort((a, b) => b.fecha.localeCompare(a.fecha));
 
-await writeFile(DATA, `${JSON.stringify(data, null, 2)}\n`);
+await writeFile(DATA, `${JSON.stringify(data, null, 4)}\n`);
 console.log(`Añadida: ${entry.fecha} ${entry.palabra}`);

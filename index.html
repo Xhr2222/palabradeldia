@@ -6,24 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Palabra del día</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
+    <script type="module" src="app.js"></script>
 </head>
 
 <body>
-    <header>
-        <h1>Palabra del día</h1>
-        <p class="subtitle">Según el <a href="https://dle.rae.es/" target="_blank" rel="noopener">Diccionario de la
-                lengua española</a></p>
+    <header class="top">
+        <div>
+            <h1>Palabra del día</h1>
+            <p class="subtitle">Según el <a href="https://dle.rae.es/" target="_blank" rel="noopener">Diccionario de la
+                    lengua española</a></p>
+        </div>
+        <div id="yo" class="me"></div>
     </header>
 
+    <nav class="tabs">
+        <a href="#inicio">Inicio</a>
+        <a href="#historial">Historial</a>
+        <a href="#palabras">Palabras</a>
+    </nav>
+
     <main>
-        <section id="hoy" class="card hero" hidden></section>
+        <section id="panel-inicio" class="panel">
+            <article id="hoy" class="card hero" hidden></article>
+            <p id="estado" class="notice" hidden></p>
+            <div class="votes">
+                <article id="voto-semana" class="card vote"></article>
+                <article id="voto-mes" class="card vote"></article>
+            </div>
+        </section>
 
-        <input id="buscar" type="search" placeholder="Buscar palabra o definición…" autocomplete="off">
+        <section id="panel-historial" class="panel" hidden>
+            <div class="history">
+                <div>
+                    <h2>Semanas</h2>
+                    <div id="historial-semana"></div>
+                </div>
+                <div>
+                    <h2>Meses</h2>
+                    <div id="historial-mes"></div>
+                </div>
+            </div>
+        </section>
 
-        <div id="listado"></div>
-        <p id="vacio" class="muted" hidden>No hay palabras todavía.</p>
+        <section id="panel-palabras" class="panel" hidden>
+            <input id="buscar" type="search" placeholder="Buscar palabra o definición…" autocomplete="off">
+            <div id="listado"></div>
+            <p id="vacio" class="muted" hidden>No hay palabras todavía.</p>
+        </section>
     </main>
+
+    <dialog id="quien">
+        <form method="dialog">
+            <h2>¿Quién eres?</h2>
+            <p class="muted">Elige tu nombre para poder votar.</p>
+            <div id="usuarios" class="users"></div>
+            <button value="cancelar" class="link">Cancelar</button>
+        </form>
+    </dialog>
 </body>
 
 </html>

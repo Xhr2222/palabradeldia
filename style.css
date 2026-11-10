@@ -31,14 +31,70 @@ body {
 }
 
 header,
+nav,
 main {
-    max-width: 760px;
+    max-width: 960px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-header {
+.top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+    justify-content: space-between;
     padding-top: 40px;
+}
+
+.me {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font: 0.95rem system-ui, sans-serif;
+}
+
+.me span {
+    font-weight: 600;
+}
+
+button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin-top: 24px;
+    border-bottom: 1px solid var(--border);
+    font: 600 0.95rem system-ui, sans-serif;
+}
+
+.tabs a {
+    padding: 10px 14px;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.tabs a.active {
+    border-color: var(--accent);
+    color: var(--text);
+}
+
+main {
+    padding-top: 24px;
+    padding-bottom: 48px;
 }
 
 h1 {
@@ -63,7 +119,7 @@ a {
 }
 
 .hero {
-    margin: 24px 0;
+    margin-bottom: 24px;
 }
 
 .hero .label {
@@ -107,22 +163,162 @@ a {
     text-transform: capitalize;
 }
 
-.month-word {
-    margin-bottom: 12px;
-    border-left: 4px solid var(--accent);
+.notice {
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
-.month-word .label {
+.votes,
+.history {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+.vote {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vote-head h2,
+.history h2 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.vote-head p {
+    margin: 4px 0 6px;
+    font: 0.85rem system-ui, sans-serif;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    text-align: left;
+}
+
+.option:hover {
+    border-color: var(--muted);
+}
+
+.option.selected {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.option-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.15rem;
+}
+
+.count {
     color: var(--muted);
-    font: 600 0.75rem/1 system-ui, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font: 600 0.85rem system-ui, sans-serif;
 }
 
-.month-word strong {
+.definition,
+.voters {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.voters {
+    font-family: system-ui, sans-serif;
+    font-size: 0.8rem;
+}
+
+.bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    overflow: hidden;
+}
+
+.fill {
     display: block;
-    margin-top: 6px;
-    font-size: 1.4rem;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s;
+}
+
+.history h2 {
+    margin-bottom: 12px;
+}
+
+.past {
+    margin-bottom: 10px;
+    padding: 14px 18px;
+}
+
+.past summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    align-items: baseline;
+    cursor: pointer;
+}
+
+.period {
+    width: 100%;
+    color: var(--muted);
+    font: 0.8rem system-ui, sans-serif;
+}
+
+.period::first-letter {
+    text-transform: uppercase;
+}
+
+.past strong {
+    font-size: 1.2rem;
+}
+
+.tally {
+    margin: 10px 0 0;
+    padding-left: 18px;
+}
+
+dialog {
+    width: min(420px, calc(100% - 40px));
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+    color: var(--text);
+}
+
+dialog::backdrop {
+    background: rgb(0 0 0 / 0.4);
+}
+
+dialog h2 {
+    margin: 0;
+}
+
+.users {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.users button {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+}
+
+.users button.selected {
+    border-color: var(--accent);
 }
 
 ul.days {

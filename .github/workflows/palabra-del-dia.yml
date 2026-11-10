@@ -2,8 +2,7 @@ name: Palabra del día
 
 on:
   schedule:
-    - cron: "30 5 * * *"
-    - cron: "30 11 * * *"
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 permissions:
@@ -16,6 +15,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
 
@@ -25,13 +25,17 @@ jobs:
 
       - run: node scripts/fetch-word.mjs
 
+      - run: node scripts/close-votes.mjs
+        if: ${{ !cancelled() }}
+
       - name: Commit
+        if: ${{ !cancelled() }}
         run: |
-          if git diff --quiet data/palabras.json; then
+          if git diff --quiet data/; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/palabras.json
-          git commit -m "Palabra del día $(date -u +%F)"
+          git add data/
+          git commit -m "Actualización $(date -u +%F)"
           git push
