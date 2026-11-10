@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Palabra del día</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Palabra del día</h1>
+        <p class="subtitle">Según el <a href="https://dle.rae.es/" target="_blank" rel="noopener">Diccionario de la
+                lengua española</a></p>
+    </header>
+
+    <main>
+        <section id="hoy" class="card hero" hidden></section>
+
+        <input id="buscar" type="search" placeholder="Buscar palabra o definición…" autocomplete="off">
+
+        <div id="listado"></div>
+        <p id="vacio" class="muted" hidden>No hay palabras todavía.</p>
+    </main>
+</body>
+
+</html>

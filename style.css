@@ -1,0 +1,155 @@
+:root {
+    --bg: #f6f3ee;
+    --card: #ffffff;
+    --text: #1f1d1a;
+    --muted: #6f6a62;
+    --accent: #b3261e;
+    --border: #e4ded4;
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #161514;
+        --card: #211f1d;
+        --text: #ece8e1;
+        --muted: #9b958c;
+        --accent: #ff8a80;
+        --border: #34312d;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 Georgia, 'Times New Roman', serif;
+}
+
+header,
+main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    padding-top: 40px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.2rem;
+}
+
+a {
+    color: var(--accent);
+}
+
+.subtitle,
+.muted {
+    color: var(--muted);
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+}
+
+.hero {
+    margin: 24px 0;
+}
+
+.hero .label {
+    margin: 0;
+    color: var(--muted);
+    font: 600 0.8rem/1 system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.hero .word {
+    display: inline-block;
+    margin: 8px 0;
+    font-size: 2.6rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.hero p {
+    margin: 0;
+}
+
+#buscar {
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text);
+    font: inherit;
+}
+
+.month {
+    margin-bottom: 32px;
+}
+
+.month h2 {
+    margin: 0 0 12px;
+    font-size: 1.3rem;
+    text-transform: capitalize;
+}
+
+.month-word {
+    margin-bottom: 12px;
+    border-left: 4px solid var(--accent);
+}
+
+.month-word .label {
+    color: var(--muted);
+    font: 600 0.75rem/1 system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.month-word strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 1.4rem;
+}
+
+ul.days {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.days li {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+ul.days time {
+    color: var(--muted);
+    font: 0.85rem/1.8 system-ui, sans-serif;
+}
+
+ul.days a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+ul.days p {
+    margin: 2px 0 0;
+    color: var(--muted);
+}
