@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-11",
+            "palabra": "saraviado, saraviada",
+            "url": "https://dle.rae.es/saraviado",
+            "definicion": "Dicho de un ave, que tiene pintas o manchas."
+        },
+        {
             "fecha": "2026-11-10",
             "palabra": "secreter",
             "url": "https://dle.rae.es/secreter",
