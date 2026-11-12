@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-12",
+            "palabra": "superyó",
+            "url": "https://dle.rae.es/supery%C3%B3",
+            "definicion": "En el psicoanálisis freudiano, parte inconsciente del yo que se observa, critica y trata de imponerse a sí mismo por referencia a las demandas de un yo ideal."
+        },
+        {
             "fecha": "2026-11-11",
             "palabra": "saraviado, saraviada",
             "url": "https://dle.rae.es/saraviado",
