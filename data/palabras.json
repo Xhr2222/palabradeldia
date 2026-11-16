@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-16",
+            "palabra": "piperina",
+            "url": "https://dle.rae.es/piperina",
+            "definicion": "Alcaloide responsable del sabor característico de la pimienta."
+        },
+        {
             "fecha": "2026-11-15",
             "palabra": "pero",
             "url": "https://dle.rae.es/pero",

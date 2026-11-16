@@ -1,3 +1,118 @@
 {
-    "votos": []
+    "votos": [
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Aarón",
+            "palabra": "superyó"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Adrián",
+            "palabra": "superyó"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Alberto",
+            "palabra": "secreter"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Carralero",
+            "palabra": "piola"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Carrascosa",
+            "palabra": "secreter"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Chapo",
+            "palabra": "superyó"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Diego",
+            "palabra": "secreter"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Faco",
+            "palabra": "piola"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Gabriel",
+            "palabra": "secreter"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Juan",
+            "palabra": "piola"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Lucía",
+            "palabra": "piola"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Marta",
+            "palabra": "piola"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Nacho",
+            "palabra": "superyó"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Olga",
+            "palabra": "superyó"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Palomero",
+            "palabra": "piola"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Pedro",
+            "palabra": "secreter"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Rubio",
+            "palabra": "secreter"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Samuel",
+            "palabra": "aquilatar"
+        },
+        {
+            "tipo": "semana",
+            "periodo": "2026-11-09",
+            "usuario": "Sara",
+            "palabra": "piola"
+        }
+    ]
 }
