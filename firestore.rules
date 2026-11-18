@@ -3,20 +3,31 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function inicio(tipo, periodo) {
+    function medianoche(t) {
+      let m = t.month();
+      let d = t.day();
+      let verano = (m > 3 && m < 10) || (m == 3 && d >= 26) || (m == 10 && d < 26);
+      return t - duration.value(verano ? 2 : 1, 'h');
+    }
+
+    function dia(tipo, periodo) {
       let p = periodo.split('-');
       return tipo == 'semana'
         ? timestamp.date(int(p[0]), int(p[1]), int(p[2]))
         : timestamp.date(int(p[0]), int(p[1]), 1);
     }
 
+    function inicio(tipo, periodo) {
+      return medianoche(dia(tipo, periodo));
+    }
+
     function fin(tipo, periodo) {
       let p = periodo.split('-');
       let y = int(p[0]);
       let m = int(p[1]);
-      return tipo == 'semana'
-        ? inicio(tipo, periodo) + duration.value(7, 'd')
-        : (m == 12 ? timestamp.date(y + 1, 1, 1) : timestamp.date(y, m + 1, 1));
+      return medianoche(tipo == 'semana'
+        ? dia(tipo, periodo) + duration.value(7, 'd')
+        : (m == 12 ? timestamp.date(y + 1, 1, 1) : timestamp.date(y, m + 1, 1)));
     }
 
     function esVotoValido(id, v) {

@@ -1,0 +1,20 @@
+{
+    "entradas": [
+        {
+            "lema": "secreter",
+            "etimologia": "Del fr. secrétaire.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "m.",
+                    "definicion": "Mueble con tablero para escribir y con cajones para guardar papeles.",
+                    "ejemplos": [
+                        "En el secreter tiene una pluma y papel de cartas."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

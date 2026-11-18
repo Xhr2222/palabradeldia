@@ -1,21 +1,24 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js';
 import { collection, doc, getFirestore, onSnapshot, query, serverTimestamp, setDoc, where } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js';
 import { firebaseConfig } from './firebase-config.js';
-import { DAY, periodEnd, periodKey, toDate, toIso, voteId } from './periodos.js';
+import { DAY, hoy, periodEnd, periodKey, toDate, toIso, voteId } from './periodos.js';
 
 const db = getFirestore(initializeApp(firebaseConfig));
 const USER_KEY = 'palabra-del-dia:usuario';
-const TABS = ['inicio', 'historial', 'palabras'];
 const TITULOS = { semana: 'Palabra de la semana', mes: 'Palabra del mes' };
+const VOTOS = { semana: 'Votos semanales', mes: 'Votos mensuales' };
+const DIAS_SEMANA = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
 
 const format = (options) => new Intl.DateTimeFormat('es-ES', { timeZone: 'UTC', ...options });
 const monthFormat = format({ month: 'long', year: 'numeric' });
-const dayFormat = format({ weekday: 'short', day: 'numeric' });
+const monthNameFormat = format({ month: 'long' });
+const dateFormat = format({ day: 'numeric', month: 'short', year: 'numeric' });
 const longFormat = format({ dateStyle: 'full' });
 const shortFormat = format({ day: 'numeric', month: 'short' });
 const relative = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
 
-const state = { dias: [], usuarios: [], archivados: [], vivos: [], usuario: null, pendiente: null, busqueda: '' };
+const state = { dias: [], usuarios: [], archivados: [], vivos: [], usuario: null, pendiente: null, busqueda: '', detalle: null };
+const entryCache = new Map();
 
 const $ = (id) => document.getElementById(id);
 
@@ -29,9 +32,15 @@ function wordLink(dia, className = '') {
     return el('a', { href: dia.url, target: '_blank', rel: 'noopener', className, textContent: dia.palabra });
 }
 
+function wordButton(dia, onClick = () => showDay(dia)) {
+    const button = el('button', { type: 'button', className: 'word-button', textContent: dia.palabra, title: dia.palabra });
+    button.addEventListener('click', onClick);
+    return button;
+}
+
 function periodLabel(tipo, periodo) {
     if (tipo === 'mes') return monthFormat.format(toDate(periodo));
-    const last = new Date(periodEnd(tipo, periodo).getTime() - DAY);
+    const last = new Date(toDate(periodo).getTime() + 6 * DAY);
     return `Del ${shortFormat.format(toDate(periodo))} al ${shortFormat.format(last)}`;
 }
 
@@ -59,6 +68,18 @@ function results(tipo, periodo, votos) {
                 .map((v) => v.usuario)
                 .sort((a, b) => a.localeCompare(b, 'es')),
         }));
+}
+
+function outcome(tipo, periodo, votos) {
+    const rows = results(tipo, periodo, votos);
+    if (!rows.length) return [];
+    if (periodEnd(tipo, periodo).getTime() > Date.now()) return [el('span', { className: 'muted', textContent: 'En curso' })];
+    const max = Math.max(...rows.map((row) => row.usuarios.length));
+    if (!max) return [el('span', { className: 'muted', textContent: 'Sin votos' })];
+    return [
+        el('strong', { textContent: rows.filter((row) => row.usuarios.length === max).map((row) => row.dia.palabra).join(' / ') }),
+        el('span', { className: 'count', textContent: `${max} ${max === 1 ? 'voto' : 'votos'}` }),
+    ];
 }
 
 async function vote(tipo, periodo, palabra) {
@@ -96,98 +117,239 @@ function renderUser() {
     $('yo').replaceChildren(...(state.usuario ? [el('span', { textContent: state.usuario })] : []), button);
 }
 
+function loadEntries(dia) {
+    if (!entryCache.has(dia.fecha)) {
+        entryCache.set(dia.fecha, fetch(`data/entradas/${dia.fecha}.json`)
+            .then((response) => (response.ok ? response.json() : { entradas: [] }))
+            .then((data) => data.entradas)
+            .catch(() => []));
+    }
+    return entryCache.get(dia.fecha);
+}
+
+function senseList(acepciones) {
+    return el('ol', { className: 'senses' }, acepciones.map((acepcion) => el('li', {}, [
+        el('span', { className: 'sense-num', textContent: acepcion.numero }),
+        el('div', {}, [
+            el('p', {}, [
+                ...(acepcion.marcas ? [el('span', { className: 'marks', textContent: acepcion.marcas }), ' '] : []),
+                acepcion.definicion,
+            ]),
+            ...acepcion.ejemplos.map((ejemplo) => el('p', { className: 'example', textContent: ejemplo })),
+            ...acepcion.notas.map((nota) => el('p', { className: 'note', textContent: nota })),
+        ]),
+    ])));
+}
+
+function entryNodes(entradas) {
+    return entradas.map((entrada) => el('section', { className: 'entry' }, [
+        ...(entradas.length > 1 ? [el('h3', { className: 'lemma', textContent: entrada.lema })] : []),
+        ...(entrada.etimologia ? [el('p', { className: 'etymology', textContent: entrada.etimologia })] : []),
+        senseList(entrada.acepciones),
+        ...(entrada.formas.length ? [el('details', { className: 'forms' }, [
+            el('summary', { textContent: `Formas complejas (${entrada.formas.length})` }),
+            ...entrada.formas.map((forma) => el('div', { className: 'form' }, [
+                el('h4', { textContent: forma.forma }),
+                ...(forma.variantes ? [el('p', { className: 'variants', textContent: forma.variantes })] : []),
+                senseList(forma.acepciones),
+            ])),
+        ])] : []),
+    ]));
+}
+
+function meaning(dia) {
+    const container = el('div', { className: 'meaning' }, [el('p', { textContent: dia.definicion ?? '' })]);
+    loadEntries(dia).then((entradas) => {
+        if (entradas.length) container.replaceChildren(...entryNodes(entradas));
+    });
+    return container;
+}
+
 function renderToday() {
     const dia = state.dias[0];
     if (!dia) return;
+    const key = `${dia.fecha}|${dia.fecha === hoy()}`;
+    if ($('hoy').dataset.key === key) return;
+    $('hoy').dataset.key = key;
     $('hoy').replaceChildren(
         el('p', { className: 'label', textContent: longFormat.format(toDate(dia.fecha)) }),
         wordLink(dia, 'word'),
-        el('p', { textContent: dia.definicion ?? '' }),
+        meaning(dia),
+        ...(dia.fecha === hoy() ? [] : [el('p', { className: 'pending', textContent: 'La palabra de hoy aún no está disponible.' })]),
     );
     $('hoy').hidden = false;
 }
 
 function renderVote(tipo) {
-    const periodo = periodKey(tipo, toIso(new Date()));
+    const periodo = periodKey(tipo, hoy());
     const rows = results(tipo, periodo, allVotes());
     const total = rows.reduce((sum, row) => sum + row.usuarios.length, 0);
 
-    const options = rows.map(({ dia, usuarios }) => {
-        const fill = el('span', { className: 'fill' });
-        fill.style.width = `${total ? (usuarios.length / total) * 100 : 0}%`;
-        const option = el('button', { type: 'button', className: usuarios.includes(state.usuario) ? 'option selected' : 'option' }, [
-            el('span', { className: 'option-head' }, [
-                el('strong', { textContent: dia.palabra }),
-                el('span', { className: 'count', textContent: String(usuarios.length) }),
-            ]),
-            el('span', { className: 'definition', textContent: dia.definicion ?? '' }),
-            el('span', { className: 'bar' }, [fill]),
-            el('span', { className: 'voters', textContent: usuarios.join(', ') }),
-        ]);
-        option.addEventListener('click', () => vote(tipo, periodo, dia.palabra));
-        return option;
-    });
+    const options = rows
+        .sort((a, b) => b.usuarios.length - a.usuarios.length || a.dia.fecha.localeCompare(b.dia.fecha))
+        .map(({ dia, usuarios }) => {
+            const fill = el('span', { className: 'fill' });
+            fill.style.width = `${total ? (usuarios.length / total) * 100 : 0}%`;
+            const option = el('button', { type: 'button', className: usuarios.includes(state.usuario) ? 'option selected' : 'option', title: dia.definicion ?? '' }, [
+                el('span', { className: 'option-head' }, [
+                    el('strong', { textContent: dia.palabra }),
+                    el('span', { className: 'count', textContent: String(usuarios.length) }),
+                ]),
+                el('span', { className: 'bar' }, [fill]),
+                ...(usuarios.length ? [el('span', { className: 'voters', textContent: usuarios.join(', ') })] : []),
+            ]);
+            option.addEventListener('click', () => vote(tipo, periodo, dia.palabra));
+            return option;
+        });
 
     $(`voto-${tipo}`).replaceChildren(
         el('header', { className: 'vote-head' }, [
             el('h2', { textContent: TITULOS[tipo] }),
             el('p', { className: 'muted', textContent: `${periodLabel(tipo, periodo)} · cierra ${closesIn(periodEnd(tipo, periodo))}` }),
         ]),
-        ...(options.length ? options : [el('p', { className: 'muted', textContent: 'Todavía no hay palabras en este periodo.' })]),
+        options.length
+            ? el('div', { className: 'options' }, options)
+            : el('p', { className: 'muted', textContent: 'Todavía no hay palabras en este periodo.' }),
     );
 }
 
-function renderHistory(tipo) {
-    const now = Date.now();
-    const votos = allVotes();
-    const periodos = [...new Set(state.dias.map((dia) => periodKey(tipo, dia.fecha)))]
-        .filter((periodo) => periodEnd(tipo, periodo).getTime() <= now)
-        .sort()
-        .reverse();
-
-    const items = periodos.map((periodo) => {
-        const rows = results(tipo, periodo, votos)
-            .filter((row) => row.usuarios.length)
-            .sort((a, b) => b.usuarios.length - a.usuarios.length);
-        const max = rows[0]?.usuarios.length ?? 0;
-        const winners = rows.filter((row) => row.usuarios.length === max);
-
-        return el('details', { className: 'card past' }, [
-            el('summary', {}, [
-                el('span', { className: 'period', textContent: periodLabel(tipo, periodo) }),
-                max
-                    ? el('strong', { textContent: winners.map((row) => row.dia.palabra).join(' / ') })
-                    : el('span', { className: 'muted', textContent: 'Sin votos' }),
-                ...(max ? [el('span', { className: 'count', textContent: `${max} ${max === 1 ? 'voto' : 'votos'}${winners.length > 1 ? ' · empate' : ''}` })] : []),
-            ]),
-            el('ul', { className: 'tally' }, rows.map((row) => el('li', {}, [
-                wordLink(row.dia),
-                el('span', { className: 'muted', textContent: ` ${row.usuarios.length} · ${row.usuarios.join(', ')}` }),
-            ]))),
-        ]);
-    });
-
-    $(`historial-${tipo}`).replaceChildren(...(items.length ? items : [el('p', { className: 'muted', textContent: 'Aún no hay votaciones cerradas.' })]));
+function route() {
+    const [tab, arg = ''] = location.hash.slice(1).split('/');
+    return tab === 'calendario' ? { tab, arg } : { tab: 'inicio', arg: '' };
 }
 
-function renderList() {
+function firstMonth() {
+    return state.dias.at(-1)?.fecha.slice(0, 7) ?? hoy().slice(0, 7);
+}
+
+function shiftMonth(mes, n) {
+    const date = toDate(mes);
+    return toIso(new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + n, 1))).slice(0, 7);
+}
+
+function navLink(text, target, enabled) {
+    return enabled
+        ? el('a', { href: `#calendario/${target}`, className: 'nav', textContent: text })
+        : el('span', { className: 'nav disabled', textContent: text });
+}
+
+function renderDayVotes(dia) {
+    const votos = allVotes();
+    $('detalle-votos').replaceChildren(...['semana', 'mes'].map((tipo) => {
+        const periodo = periodKey(tipo, dia.fecha);
+        const usuarios = results(tipo, periodo, votos).find((row) => row.dia === dia)?.usuarios ?? [];
+        const children = [el('span', { className: 'muted', textContent: `${VOTOS[tipo]}: ${usuarios.length ? usuarios.join(', ') : 'ninguno'}` })];
+        if (periodEnd(tipo, periodo).getTime() > Date.now()) {
+            const elegida = usuarios.includes(state.usuario);
+            const button = el('button', {
+                type: 'button',
+                className: elegida ? 'vote-button selected' : 'vote-button',
+                textContent: elegida ? `Tu ${TITULOS[tipo].toLowerCase()}` : `Votar como ${TITULOS[tipo].toLowerCase()}`,
+            });
+            button.addEventListener('click', () => vote(tipo, periodo, dia.palabra));
+            children.push(button);
+        }
+        return el('p', { className: 'day-vote' }, children);
+    }));
+}
+
+function showDay(dia) {
+    state.detalle = dia;
+    $('detalle-contenido').replaceChildren(
+        el('p', { className: 'label', textContent: longFormat.format(toDate(dia.fecha)) }),
+        wordLink(dia, 'word'),
+        meaning(dia),
+    );
+    renderDayVotes(dia);
+    $('detalle').showModal();
+}
+
+function renderMonth(mes) {
+    const votos = allVotes();
+    const today = hoy();
+    const next = shiftMonth(mes, 1);
+    const porFecha = new Map(state.dias.map((dia) => [dia.fecha, dia]));
+    const cells = [
+        ...DIAS_SEMANA.map((nombre) => el('span', { className: 'weekday', textContent: nombre })),
+        el('span', { className: 'weekday week-head', textContent: 'Semana' }),
+    ];
+
+    for (let lunes = toDate(periodKey('semana', `${mes}-01`)); toIso(lunes) < `${next}-01`; lunes = new Date(lunes.getTime() + 7 * DAY)) {
+        for (let i = 0; i < 7; i++) {
+            const fecha = toIso(new Date(lunes.getTime() + i * DAY));
+            const dia = porFecha.get(fecha);
+            const className = ['day', fecha.startsWith(mes) ? '' : 'out', fecha === today ? 'today' : ''].filter(Boolean).join(' ');
+            cells.push(el('div', { className }, [
+                el('span', { className: 'num', textContent: String(Number(fecha.slice(8))) }),
+                ...(dia ? [wordButton(dia)] : []),
+            ]));
+        }
+        const semana = outcome('semana', toIso(lunes), votos);
+        cells.push(el('div', { className: 'week' }, semana.length ? [el('span', { className: 'week-label', textContent: 'Semana' }), ...semana] : []));
+    }
+
+    const ganador = outcome('mes', mes, votos);
+    $('calendario').replaceChildren(
+        el('header', { className: 'cal-head' }, [
+            navLink('‹', shiftMonth(mes, -1), mes > firstMonth()),
+            el('h2', {}, [el('a', { href: `#calendario/${mes.slice(0, 4)}`, textContent: monthFormat.format(toDate(mes)) })]),
+            navLink('›', next, next <= today.slice(0, 7)),
+        ]),
+        ...(ganador.length ? [el('p', { className: 'cal-summary' }, [el('span', { textContent: TITULOS.mes }), ...ganador])] : []),
+        el('div', { className: 'calendar' }, cells),
+    );
+}
+
+function renderYear(year) {
+    const votos = allVotes();
+    const actual = hoy().slice(0, 7);
+    const cards = Array.from({ length: 12 }, (_, i) => {
+        const mes = `${year}-${String(i + 1).padStart(2, '0')}`;
+        const palabras = state.dias.some((dia) => dia.fecha.startsWith(mes));
+        const children = [
+            el('span', { className: 'name', textContent: monthNameFormat.format(toDate(mes)) }),
+            ...(palabras ? outcome('mes', mes, votos) : [el('span', { className: 'muted', textContent: 'Sin palabras' })]),
+        ];
+        return palabras || mes === actual
+            ? el('a', { href: `#calendario/${mes}`, className: 'card month-card' }, children)
+            : el('span', { className: 'card month-card empty' }, children);
+    });
+
+    $('calendario').replaceChildren(
+        el('header', { className: 'cal-head' }, [
+            navLink('‹', year - 1, year - 1 >= Number(firstMonth().slice(0, 4))),
+            el('h2', { textContent: String(year) }),
+            navLink('›', year + 1, year + 1 <= Number(actual.slice(0, 4))),
+        ]),
+        el('div', { className: 'year' }, cards),
+    );
+}
+
+function renderSearch() {
     const q = state.busqueda.trim().toLocaleLowerCase('es');
     const matches = (text) => (text ?? '').toLocaleLowerCase('es').includes(q);
-    const dias = state.dias.filter((d) => !q || matches(d.palabra) || matches(d.definicion));
-    const meses = [...new Set(dias.map((d) => d.fecha.slice(0, 7)))].sort().reverse();
+    const dias = state.dias.filter((dia) => matches(dia.palabra) || matches(dia.definicion));
+    const open = (dia) => () => {
+        state.busqueda = '';
+        $('buscar').value = '';
+        location.hash = `calendario/${dia.fecha.slice(0, 7)}`;
+        renderCalendar();
+        showDay(dia);
+    };
 
-    const sections = meses.map((mes) => el('section', { className: 'month' }, [
-        el('h2', { textContent: monthFormat.format(toDate(mes)) }),
-        el('ul', { className: 'days' }, dias
-            .filter((d) => d.fecha.startsWith(mes))
-            .map((d) => el('li', {}, [
-                el('time', { dateTime: d.fecha, textContent: dayFormat.format(toDate(d.fecha)) }),
-                el('div', {}, [wordLink(d), el('p', { textContent: d.definicion ?? '' })]),
-            ]))),
-    ]));
+    $('calendario').replaceChildren(dias.length
+        ? el('ul', { className: 'days' }, dias.map((dia) => el('li', {}, [
+            el('time', { dateTime: dia.fecha, textContent: dateFormat.format(toDate(dia.fecha)) }),
+            el('div', {}, [wordButton(dia, open(dia)), el('p', { textContent: dia.definicion ?? '' })]),
+        ])))
+        : el('p', { className: 'muted', textContent: 'No hay resultados.' }));
+}
 
-    $('listado').replaceChildren(...sections);
-    $('vacio').hidden = sections.length > 0;
+function renderCalendar() {
+    const { arg } = route();
+    if (state.busqueda.trim()) renderSearch();
+    else if (/^\d{4}$/.test(arg)) renderYear(Number(arg));
+    else renderMonth(/^\d{4}-\d{2}$/.test(arg) ? arg : hoy().slice(0, 7));
 }
 
 function render() {
@@ -195,23 +357,22 @@ function render() {
     renderToday();
     renderVote('semana');
     renderVote('mes');
-    renderHistory('semana');
-    renderHistory('mes');
-    renderList();
+    renderCalendar();
+    if ($('detalle').open) renderDayVotes(state.detalle);
 }
 
 function showTab() {
-    const tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'inicio';
+    const { tab } = route();
     document.querySelectorAll('.panel').forEach((panel) => { panel.hidden = panel.id !== `panel-${tab}`; });
     document.querySelectorAll('.tabs a').forEach((link) => link.classList.toggle('active', link.hash === `#${tab}`));
 }
 
 function subscribe() {
-    const today = toIso(new Date());
+    const today = hoy();
     const monthStart = toDate(periodKey('mes', today));
     const periodos = [
         periodKey('semana', today),
-        periodKey('semana', toIso(new Date(Date.now() - 7 * DAY))),
+        periodKey('semana', toIso(new Date(toDate(today).getTime() - 7 * DAY))),
         periodKey('mes', today),
         periodKey('mes', toIso(new Date(monthStart.getTime() - DAY))),
     ];
@@ -251,10 +412,13 @@ $('quien').addEventListener('close', () => {
 
 $('buscar').addEventListener('input', (event) => {
     state.busqueda = event.target.value;
-    renderList();
+    renderCalendar();
 });
 
-window.addEventListener('hashchange', showTab);
+window.addEventListener('hashchange', () => {
+    showTab();
+    renderCalendar();
+});
 setInterval(render, 60000);
 
 showTab();

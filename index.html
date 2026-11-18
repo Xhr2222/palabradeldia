@@ -21,8 +21,7 @@
 
     <nav class="tabs">
         <a href="#inicio">Inicio</a>
-        <a href="#historial">Historial</a>
-        <a href="#palabras">Palabras</a>
+        <a href="#calendario">Calendario</a>
     </nav>
 
     <main>
@@ -35,25 +34,19 @@
             </div>
         </section>
 
-        <section id="panel-historial" class="panel" hidden>
-            <div class="history">
-                <div>
-                    <h2>Semanas</h2>
-                    <div id="historial-semana"></div>
-                </div>
-                <div>
-                    <h2>Meses</h2>
-                    <div id="historial-mes"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="panel-palabras" class="panel" hidden>
+        <section id="panel-calendario" class="panel" hidden>
             <input id="buscar" type="search" placeholder="Buscar palabra o definición…" autocomplete="off">
-            <div id="listado"></div>
-            <p id="vacio" class="muted" hidden>No hay palabras todavía.</p>
+            <div id="calendario"></div>
         </section>
     </main>
+
+    <dialog id="detalle">
+        <form method="dialog">
+            <div id="detalle-contenido"></div>
+            <div id="detalle-votos"></div>
+            <button class="link" autofocus>Cerrar</button>
+        </form>
+    </dialog>
 
     <dialog id="quien">
         <form method="dialog">

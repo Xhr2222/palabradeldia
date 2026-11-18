@@ -1,7 +1,12 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { DOMParser } from 'linkedom';
+import { hoy } from '../periodos.js';
 
 const BASE = 'https://dle.rae.es';
 const DATA = new URL('../data/palabras.json', import.meta.url);
+const ENTRADAS = new URL('../data/entradas/', import.meta.url);
+const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
 const HEADERS = {
     'User-Agent': 'palabra-del-dia/1.0',
     'Accept-Language': 'es-ES,es;q=0.9',
@@ -45,21 +50,58 @@ function parseWordOfTheDay(html) {
     };
 }
 
-async function fetchDefinition(url) {
-    const html = await get(url);
-    const meta = html.match(/<meta\s+name="description"\s+content="([^"]*)"/i);
-    if (!meta) return '';
-    return decode(meta[1]).replace(/^Definición RAE de «[^»]*» según el Diccionario de la lengua española:\s*/, '');
+const text = (node) => node?.textContent.replace(/\s+/g, ' ').trim() ?? '';
+
+function parseSenses(list) {
+    return [...list.querySelectorAll('.c-definitions__item')].map((item) => {
+        const content = item.firstElementChild;
+        const definition = content.querySelector('.dle24-definition');
+        const marks = [];
+        for (const child of content.children) {
+            if (child === definition) break;
+            if (!child.classList.contains('n_acep')) marks.push(text(child));
+        }
+        return {
+            numero: text(content.querySelector('.n_acep')),
+            marcas: marks.join(' '),
+            definicion: text(definition),
+            ejemplos: [...content.querySelectorAll('.c-definitions__item-example')].filter((node) => !node.closest('.e1')).map(text),
+            notas: [...content.querySelectorAll('.e1')].map((note) => [...note.children].map(text).join(' ')),
+        };
+    });
+}
+
+function parseEntries(document) {
+    return [...document.querySelectorAll('article.o-main__article')].map((article) => {
+        article.querySelectorAll('sup').forEach((sup) => {
+            sup.textContent = [...sup.textContent.trim()].map((digit) => SUP[digit] ?? digit).join('');
+        });
+        const parts = [...article.querySelector('section.c-section').children];
+        const list = parts.find((node) => node.matches('ol.c-definitions'));
+        return {
+            lema: text(article.querySelector('.c-page-header__title')),
+            etimologia: text(parts.find((node) => node.classList.contains('c-text-intro'))),
+            acepciones: list ? parseSenses(list) : [],
+            formas: parts.filter((node) => node.classList.contains('fc-definition')).map((form) => ({
+                forma: text(form.querySelector('.k5')),
+                variantes: text(form.querySelector('.c-text-intro')),
+                acepciones: parseSenses(form.querySelector('ol.c-definitions')),
+            })),
+        };
+    });
+}
+
+async function fetchEntries(url) {
+    const entradas = parseEntries(new DOMParser().parseFromString(await get(url), 'text/html'));
+    if (!entradas.length) throw new Error(`${url} -> sin acepciones`);
+    return entradas;
 }
 
 async function fetchToday(today) {
     for (let attempt = 1; ; attempt++) {
         try {
             const entry = parseWordOfTheDay(await get(BASE));
-            if (entry.fecha === today) {
-                entry.definicion = await fetchDefinition(entry.url);
-                return entry;
-            }
+            if (entry.fecha === today) return entry;
             console.log(`Intento ${attempt}: la RAE todavía muestra la palabra del ${entry.fecha}`);
         } catch (error) {
             console.log(`Intento ${attempt}: ${error.message}`);
@@ -68,17 +110,31 @@ async function fetchToday(today) {
     }
 }
 
+const writeJson = (file, value) => writeFile(file, `${JSON.stringify(value, null, 4)}\n`);
 const data = JSON.parse(await readFile(DATA, 'utf8'));
-const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid' }).format(new Date());
+const today = hoy();
 
 if (data.dias.some((dia) => dia.fecha === today)) {
     console.log(`Ya registrada la palabra del ${today}`);
-    process.exit(0);
+} else {
+    const entry = await fetchToday(today);
+    data.dias.push(entry);
+    data.dias.sort((a, b) => b.fecha.localeCompare(a.fecha));
+    console.log(`Añadida: ${entry.fecha} ${entry.palabra}`);
 }
 
-const entry = await fetchToday(today);
-data.dias.push(entry);
-data.dias.sort((a, b) => b.fecha.localeCompare(a.fecha));
+await mkdir(ENTRADAS, { recursive: true });
+for (const dia of data.dias) {
+    const file = new URL(`${dia.fecha}.json`, ENTRADAS);
+    if (existsSync(file)) continue;
+    try {
+        const entradas = await fetchEntries(dia.url);
+        dia.definicion ??= entradas[0].acepciones[0]?.definicion ?? '';
+        await writeJson(file, { entradas });
+        console.log(`Acepciones guardadas: ${dia.fecha} ${dia.palabra}`);
+    } catch (error) {
+        console.log(`Acepciones de ${dia.palabra}: ${error.message}`);
+    }
+}
 
-await writeFile(DATA, `${JSON.stringify(data, null, 4)}\n`);
-console.log(`Añadida: ${entry.fecha} ${entry.palabra}`);
+await writeJson(DATA, data);
