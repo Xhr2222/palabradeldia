@@ -1,0 +1,47 @@
+{
+    "entradas": [
+        {
+            "lema": "talento",
+            "etimologia": "Del lat. talentum 'moneda de cuenta', 'unidad de peso', y este del gr. τάλαντον tálanton.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "m.",
+                    "definicion": "Capacidad y disposición para el buen desempeño o ejercicio de un negocio, de una industria, de un arte, etc.",
+                    "ejemplos": [
+                        "Las letras no se le dan bien, pero tiene talento para la música."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "m.",
+                    "definicion": "inteligencia¹ (➝ 1a).",
+                    "ejemplos": [
+                        "Destacó en el homenajeado tanto su bondad como su talento."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "3.",
+                    "marcas": "m.",
+                    "definicion": "Persona inteligente o apta para determinada ocupación.",
+                    "ejemplos": [
+                        "Dicen de Einstein que era un talento natural. La chica es todo un talento: lo mismo baila que canta."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "4.",
+                    "marcas": "m.",
+                    "definicion": "Moneda de cuenta de los griegos y de los romanos.",
+                    "ejemplos": [
+                        "La parábola cuenta el uso que hicieron unos siervos de los talentos que les dio su señor."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

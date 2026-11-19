@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-19",
+            "palabra": "lenticular",
+            "url": "https://dle.rae.es/lenticular",
+            "definicion": "Parecido en la forma a la semilla de la lenteja."
+        },
+        {
             "fecha": "2026-11-18",
             "palabra": "talento",
             "url": "https://dle.rae.es/talento",

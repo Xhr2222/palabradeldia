@@ -1,0 +1,29 @@
+{
+    "entradas": [
+        {
+            "lema": "lenticular",
+            "etimologia": "Del lat. lenticulāris.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "adj.",
+                    "definicion": "Parecido en la forma a la semilla de la lenteja.",
+                    "ejemplos": [
+                        "Muchos ciclistas usan ruedas lenticulares."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "m. Anatomía",
+                    "definicion": "Pequeña apófisis del yunque, mediante la cual este huesecillo de la parte media del oído de los mamíferos se articula con el estribo.",
+                    "ejemplos": [],
+                    "notas": [
+                        "U. t. c. adj. Apófisis, hueso lenticular."
+                    ]
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

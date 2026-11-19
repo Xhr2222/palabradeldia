@@ -1,0 +1,102 @@
+{
+    "entradas": [
+        {
+            "lema": "pero¹",
+            "etimologia": "Del lat. pirum.",
+            "acepciones": [
+                {
+                    "numero": "1.a.",
+                    "marcas": "m.",
+                    "definicion": "Variedad de manzano, cuyo fruto es más largo que grueso.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "1.b.",
+                    "marcas": "m.",
+                    "definicion": "Fruto del pero (➝ 1a).",
+                    "ejemplos": [],
+                    "notas": []
+                }
+            ],
+            "formas": [
+                {
+                    "forma": "ese pero no está maduro",
+                    "variantes": "",
+                    "acepciones": [
+                        {
+                            "numero": "1.",
+                            "marcas": "expr.",
+                            "definicion": "Usado con intención de prevenir a alguien para que no prosiga en lo que emprende, por no ser ocasión u ofrecer inconveniente.",
+                            "ejemplos": [],
+                            "notas": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "lema": "pero²",
+            "etimologia": "De Pedro.",
+            "acepciones": [],
+            "formas": []
+        },
+        {
+            "lema": "pero³",
+            "etimologia": "Del lat. per hoc 'por esto'.",
+            "acepciones": [
+                {
+                    "numero": "1.a.",
+                    "marcas": "conj. advers.",
+                    "definicion": "Usado para contraponer a un concepto otro diverso o ampliativo del anterior.",
+                    "ejemplos": [
+                        "El dinero hace ricas a las personas, pero no dichosas. La injurié, pero ella primero me había injuriado a mí."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "1.b.",
+                    "marcas": "conj. advers. desusado",
+                    "definicion": "Usado para contraponer un concepto afirmativo a otro negativo anterior.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "conj. advers.",
+                    "definicion": "Usado a principio de cláusula sin referirse a otra anterior, para dar énfasis o fuerza de expresión a lo que se dice.",
+                    "ejemplos": [
+                        "Pero ¿dónde vas a meter tantos libros? Pero ¡qué hermosa noche!"
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "3.",
+                    "marcas": "m. coloquial",
+                    "definicion": "Defecto u objeción.",
+                    "ejemplos": [
+                        "Este cuadro no tiene pero. Es tan poco amigo de hacer favores que nunca deja de poner algún pero a todo lo que se le pide."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": [
+                {
+                    "forma": "pero que muy",
+                    "variantes": "",
+                    "acepciones": [
+                        {
+                            "numero": "1.",
+                            "marcas": "expr.",
+                            "definicion": "Usado ante adjetivos y adverbios para darles mayor relieve.",
+                            "ejemplos": [
+                                "Toca el clarinete pero que muy bien."
+                            ],
+                            "notas": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

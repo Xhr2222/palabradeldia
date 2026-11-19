@@ -1,0 +1,77 @@
+{
+    "entradas": [
+        {
+            "lema": "piola¹",
+            "etimologia": "Del lat. *pediŏla 'traba'.",
+            "acepciones": [
+                {
+                    "numero": "1.a.",
+                    "marcas": "f.",
+                    "definicion": "Cuerda delgada.",
+                    "ejemplos": [
+                        "La valija estaba asegurada con una piola."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "1.b.",
+                    "marcas": "f. Marina",
+                    "definicion": "Cabo pequeño formado de dos o tres filásticas.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "f. España regional o dialectal",
+                    "definicion": "Especie de triquitraque.",
+                    "ejemplos": [],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        },
+        {
+            "lema": "piola²",
+            "etimologia": "",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "adj. coloquial Argentina Uruguay",
+                    "definicion": "Simpático, de trato agradable.",
+                    "ejemplos": [
+                        "La gente de este lugar es realmente piola."
+                    ],
+                    "notas": [
+                        "U. t. c. s."
+                    ]
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "adj. coloquial Argentina",
+                    "definicion": "Astuto, listo.",
+                    "ejemplos": [
+                        "Es el más fuerte y también el más piola."
+                    ],
+                    "notas": [
+                        "U. t. c. s. Que no se haga el piola el pelado ese."
+                    ]
+                }
+            ],
+            "formas": [
+                {
+                    "forma": "quedarse piola",
+                    "variantes": "",
+                    "acepciones": [
+                        {
+                            "numero": "1.",
+                            "marcas": "loc. verb. coloquial Argentina",
+                            "definicion": "Quedarse al margen.",
+                            "ejemplos": [],
+                            "notas": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

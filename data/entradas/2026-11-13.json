@@ -1,0 +1,41 @@
+{
+    "entradas": [
+        {
+            "lema": "aquilatar",
+            "etimologia": "",
+            "acepciones": [
+                {
+                    "numero": "1.a.",
+                    "marcas": "tr.",
+                    "definicion": "Examinar y graduar los quilates del oro y de las perlas y piedras preciosas.",
+                    "ejemplos": [
+                        "Un gemólogo aquilatará el valor de la piedra preciosa."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "1.b.",
+                    "marcas": "tr.",
+                    "definicion": "Examinar y apreciar con rigor el mérito de alguien o el mérito o verdad de algo.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "1.c.",
+                    "marcas": "tr.",
+                    "definicion": "Analizar algo con detalle y de manera precisa.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "tr.",
+                    "definicion": "Purificar algo separando lo impuro o extraño.",
+                    "ejemplos": [],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

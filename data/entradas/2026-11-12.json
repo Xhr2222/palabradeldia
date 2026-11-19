@@ -1,0 +1,20 @@
+{
+    "entradas": [
+        {
+            "lema": "superyó",
+            "etimologia": "De super- y yo.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "m. Psicología",
+                    "definicion": "En el psicoanálisis freudiano, parte inconsciente del yo que se observa, critica y trata de imponerse a sí mismo por referencia a las demandas de un yo ideal.",
+                    "ejemplos": [
+                        "El superyó impone sus exigencias al yo o parte consciente."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}
