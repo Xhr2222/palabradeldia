@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-20",
+            "palabra": "noctambular",
+            "url": "https://dle.rae.es/noctambular",
+            "definicion": "Andar vagando de noche."
+        },
+        {
             "fecha": "2026-11-19",
             "palabra": "lenticular",
             "url": "https://dle.rae.es/lenticular",
