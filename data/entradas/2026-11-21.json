@@ -1,0 +1,25 @@
+{
+    "entradas": [
+        {
+            "lema": "cúneo",
+            "etimologia": "Del lat. cuneus.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "m.",
+                    "definicion": "En los teatros o anfiteatros antiguos, espacio comprendido entre los vomitorios.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "m. Milicia",
+                    "definicion": "cuño (➝ 2).",
+                    "ejemplos": [],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}
