@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-22",
+            "palabra": "blusero, blusera",
+            "url": "https://dle.rae.es/blusero",
+            "definicion": "Perteneciente o relativo al blues."
+        },
+        {
             "fecha": "2026-11-21",
             "palabra": "cúneo",
             "url": "https://dle.rae.es/c%C3%BAneo",

@@ -1,0 +1,36 @@
+{
+    "entradas": [
+        {
+            "lema": "blusero, blusera",
+            "etimologia": "",
+            "acepciones": [
+                {
+                    "numero": "1.a.",
+                    "marcas": "adj.",
+                    "definicion": "Perteneciente o relativo al blues.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "1.b.",
+                    "marcas": "adj.",
+                    "definicion": "Que compone o interpreta blues.",
+                    "ejemplos": [],
+                    "notas": [
+                        "Apl. a pers., u. t. c. s."
+                    ]
+                },
+                {
+                    "numero": "1.c.",
+                    "marcas": "adj.",
+                    "definicion": "Seguidor del blues.",
+                    "ejemplos": [],
+                    "notas": [
+                        "Apl. a pers., u. t. c. s."
+                    ]
+                }
+            ],
+            "formas": []
+        }
+    ]
+}
