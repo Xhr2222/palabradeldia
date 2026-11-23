@@ -1,0 +1,36 @@
+{
+    "entradas": [
+        {
+            "lema": "torbellino",
+            "etimologia": "Del mediev. torbelino, disimilación de torbenino, y este del lat. turbo, -ĭnis y el esp. -ino.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "m.",
+                    "definicion": "Remolino de viento.",
+                    "ejemplos": [
+                        "Un torbellino ha llenado la piscina de hojas."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "m.",
+                    "definicion": "Abundancia de cosas que ocurren a un mismo tiempo.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "3.",
+                    "marcas": "m. coloquial",
+                    "definicion": "Persona demasiado viva e inquieta y que actúa o habla atropellada y desordenadamente.",
+                    "ejemplos": [
+                        "El niño es un torbellino que trae de cabeza a sus padres."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

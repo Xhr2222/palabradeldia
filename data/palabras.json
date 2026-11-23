@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-23",
+            "palabra": "torbellino",
+            "url": "https://dle.rae.es/torbellino",
+            "definicion": "Remolino de viento."
+        },
+        {
             "fecha": "2026-11-22",
             "palabra": "blusero, blusera",
             "url": "https://dle.rae.es/blusero",
