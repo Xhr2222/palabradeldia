@@ -1,0 +1,29 @@
+{
+    "entradas": [
+        {
+            "lema": "quetzal",
+            "etimologia": "Del náhuatl quetzalli 'hermosa pluma'.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "m.",
+                    "definicion": "Ave trepadora, propia de la América tropical, de unos 25 cm desde lo alto de la cabeza hasta la rabadilla, 54 de envergadura y 60 en las cobijas de la cola, plumaje suave, de color verde tornasolado y muy brillante en las partes superiores del cuerpo y rojo en el pecho y abdomen, cabeza gruesa, con un moño sedoso y verde, mucho más desarrollado en el macho que en la hembra, y pies y pico amarillentos.",
+                    "ejemplos": [
+                        "Cuenta la leyenda que un quetzal volaba sobre la cabeza del jefe."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "m.",
+                    "definicion": "Moneda guatemalteca que en una de sus caras lleva grabada la imagen de un quetzal (➝ 1).",
+                    "ejemplos": [
+                        "Al llegar a Guatemala, cambió dólares en quetzales."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}
