@@ -1,0 +1,84 @@
+{
+    "entradas": [
+        {
+            "lema": "repartir",
+            "etimologia": "",
+            "acepciones": [
+                {
+                    "numero": "1.a.",
+                    "marcas": "tr.",
+                    "definicion": "Distribuir algo dividiéndolo en partes.",
+                    "ejemplos": [
+                        "Repartió sus propiedades entre sus tres hijos. Como no llevaron comida, repartimos la mía."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "1.b.",
+                    "marcas": "tr.",
+                    "definicion": "Distribuir por lugares distintos o entre personas diferentes.",
+                    "ejemplos": [
+                        "Repartió las cartas a los jugadores. Voy a repartiros los sobres con las notas. Reparte propaganda por los buzones."
+                    ],
+                    "notas": [
+                        "U. t. c. prnl."
+                    ]
+                },
+                {
+                    "numero": "1.c.",
+                    "marcas": "tr.",
+                    "definicion": "Cargar una contribución o gravamen por partes.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "2.a.",
+                    "marcas": "tr.",
+                    "definicion": "Ordenar o disponer por clases algo.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "2.b.",
+                    "marcas": "tr.",
+                    "definicion": "Señalar o atribuir partes a un todo.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "2.c.",
+                    "marcas": "tr.",
+                    "definicion": "Dar a cada cosa su oportuna colocación o el destino conveniente.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "3.a.",
+                    "marcas": "tr.",
+                    "definicion": "Entregar a personas distintas lo que han encargado o deben recibir.",
+                    "ejemplos": [],
+                    "notas": []
+                },
+                {
+                    "numero": "3.b.",
+                    "marcas": "tr.",
+                    "definicion": "Adjudicar los papeles de una obra dramática a los actores que han de representarla.",
+                    "ejemplos": [
+                        "Aún no han repartido los papeles secundarios."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "4.",
+                    "marcas": "tr.",
+                    "definicion": "Extender o distribuir uniformemente una materia sobre una superficie.",
+                    "ejemplos": [
+                        "Reparte la mermelada por toda la tostada."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

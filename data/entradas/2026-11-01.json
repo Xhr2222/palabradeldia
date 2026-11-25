@@ -1,0 +1,27 @@
+{
+    "entradas": [
+        {
+            "lema": "luctuoso, luctuosa",
+            "etimologia": "Del lat. luctuōsus, y este de luctus 'llanto', 'aflicción', 'duelo, luto' y -ōsus '-oso²'.",
+            "acepciones": [
+                {
+                    "numero": "1.a.",
+                    "marcas": "adj.",
+                    "definicion": "Triste, fúnebre y digno de llanto.",
+                    "ejemplos": [
+                        "Se enteró de la luctuosa noticia por la prensa."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "1.b.",
+                    "marcas": "luctuosa f.",
+                    "definicion": "Derecho pagado en algunas provincias a los señores y prelados cuando morían sus súbditos, que a veces consistía en una alhaja o prenda de ropa del difunto, bien la que él señalaba en su testamento, bien la que el señor o prelado elegía.",
+                    "ejemplos": [],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

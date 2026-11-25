@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-25",
+            "palabra": "hialino, hialina",
+            "url": "https://dle.rae.es/hialino",
+            "definicion": "traslúcido."
+        },
+        {
             "fecha": "2026-11-24",
             "palabra": "quetzal",
             "url": "https://dle.rae.es/quetzal",
@@ -144,6 +150,5 @@
             "url": "https://dle.rae.es/luctuoso",
             "definicion": "Triste, fúnebre y digno de llanto."
         }
-
     ]
 }

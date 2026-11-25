@@ -1,0 +1,27 @@
+{
+    "entradas": [
+        {
+            "lema": "tegeo, tegea",
+            "etimologia": "Del lat. Tegeaeus.",
+            "acepciones": [
+                {
+                    "numero": "1.a.",
+                    "marcas": "adj.",
+                    "definicion": "Natural de Tegea, ciudad de Arcadia.",
+                    "ejemplos": [],
+                    "notas": [
+                        "U. t. c. s."
+                    ]
+                },
+                {
+                    "numero": "1.b.",
+                    "marcas": "adj.",
+                    "definicion": "Perteneciente o relativo a Tegea o a los tegeos (➝ 1a).",
+                    "ejemplos": [],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+{
+    "entradas": [
+        {
+            "lema": "albahaca",
+            "etimologia": "Del ár. hisp. alḥabáqa, y este del ár. clás. ḥabaqah.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "f.",
+                    "definicion": "Hierba de la familia de las labiadas, oriunda de Asia, con hojas ovadas, lampiñas y brillantes, y flores blancas, muy aromática, y que se cultiva ampliamente por su uso en cocina, especialmente como condimento (Ocimum basilicum).",
+                    "ejemplos": [
+                        "Aderezó el plato de macarrones con una salsa de albahaca."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": [
+                {
+                    "forma": "albahaca silvestre mayor",
+                    "variantes": "",
+                    "acepciones": [
+                        {
+                            "numero": "1.",
+                            "marcas": "f.",
+                            "definicion": "clinopodio.",
+                            "ejemplos": [],
+                            "notas": []
+                        }
+                    ]
+                },
+                {
+                    "forma": "albahaca silvestre menor",
+                    "variantes": "",
+                    "acepciones": [
+                        {
+                            "numero": "1.",
+                            "marcas": "f.",
+                            "definicion": "té de monte.",
+                            "ejemplos": [],
+                            "notas": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "entradas": [
+        {
+            "lema": "bucanero, bucanera",
+            "etimologia": "Del fr. boucanier.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "m. y f.",
+                    "definicion": "Pirata que en los siglos xvii y xviii se entregaba al saqueo de las posesiones españolas de ultramar.",
+                    "ejemplos": [
+                        "Los bucaneros asaltaron el palacio del virrey."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}
