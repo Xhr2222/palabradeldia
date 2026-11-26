@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-26",
+            "palabra": "balaca",
+            "url": "https://dle.rae.es/balaca",
+            "definicion": "Diadema o cinta para sujetar el pelo."
+        },
+        {
             "fecha": "2026-11-25",
             "palabra": "hialino, hialina",
             "url": "https://dle.rae.es/hialino",
