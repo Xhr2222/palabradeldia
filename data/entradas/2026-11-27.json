@@ -1,0 +1,29 @@
+{
+    "entradas": [
+        {
+            "lema": "popurrí",
+            "etimologia": "Del fr. pot pourri, y este calco de olla podrida.",
+            "acepciones": [
+                {
+                    "numero": "1.",
+                    "marcas": "m.",
+                    "definicion": "Mezcolanza de cosas diversas, cajón de sastre.",
+                    "ejemplos": [
+                        "La fiesta era un popurrí de gente variopinta."
+                    ],
+                    "notas": []
+                },
+                {
+                    "numero": "2.",
+                    "marcas": "m.",
+                    "definicion": "Composición musical formada de fragmentos o temas de obras diversas.",
+                    "ejemplos": [
+                        "Interpretó un popurrí de sus viejos éxitos."
+                    ],
+                    "notas": []
+                }
+            ],
+            "formas": []
+        }
+    ]
+}

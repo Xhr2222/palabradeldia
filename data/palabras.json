@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-27",
+            "palabra": "popurrí",
+            "url": "https://dle.rae.es/popurr%C3%AD",
+            "definicion": "Mezcolanza de cosas diversas, cajón de sastre."
+        },
+        {
             "fecha": "2026-11-26",
             "palabra": "balaca",
             "url": "https://dle.rae.es/balaca",
