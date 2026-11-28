@@ -1,6 +1,12 @@
 {
     "dias": [
         {
+            "fecha": "2026-11-28",
+            "palabra": "acitronar",
+            "url": "https://dle.rae.es/acitronar",
+            "definicion": "Sofreír algunas verduras, generalmente cebolla y ajo, hasta que se vuelvan traslúcidas."
+        },
+        {
             "fecha": "2026-11-27",
             "palabra": "popurrí",
             "url": "https://dle.rae.es/popurr%C3%AD",
